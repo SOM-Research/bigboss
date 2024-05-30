@@ -7,9 +7,11 @@ from langchain_core.prompts import ChatPromptTemplate
 
 # Initialize the language model (LLM) with the specified model name
 llm = Ollama(model=MODEL_NAME)
+
 # Initialize the output parser
 output_parser = StrOutputParser()
-# Define the prompt template using messages from the configuration
+
+# Define the prompt templates
 prompt = ChatPromptTemplate.from_messages(PROMPT_TEMPLATE)
 response_prompt = ChatPromptTemplate.from_messages(RESPONSE_PROMPT_TEMPLATE)
 
