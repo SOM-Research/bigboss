@@ -1,4 +1,4 @@
-# Configuraciones del modelo y el código de conducta
+
 
 MODEL_NAME = "mixtral:8x22b"
 
@@ -21,7 +21,7 @@ The Code of Conduct is based on the following guidelines:
 6. Hate Speech: Using language that promotes hatred against individuals or groups.
 
 **Neutral Flags**
-A comment is neutral when dont enter in described flags.
+A comment is considered neutral when it does not fall under any of the described flags.
 
 Negative comments can't have positive flags.
 Here are some examples of comments and the expected JSON output:
@@ -62,12 +62,22 @@ Here are some examples of comments and the expected JSON output:
 **Comment:**
 """
 
+EXPLANATION = """
+This response was generated to thank a user who left a comment on a GitHub issue.
+A suitable and kind response is provided.
+The responses should be in english and one sentence.
+"""
+
 PROMPT_TEMPLATE = [
     ("system", "Your task is to analyze community comments and generate a JSON output that includes the comment, a classification (positive or negative), the reasons for the classification, and a list of relevant flags based on the given Code of Conduct."),
     ("user", "{input}")
 ]
 
-# Definir las banderas con nomenclatura
+RESPONSE_PROMPT_TEMPLATE = [
+    ("system", "You are a contributor to the repository. Generate a kind and grateful response to the following positive comment received on GitHub. Respond in English."),
+    ("user", "{input}")
+]
+
 FLAGS = {
     "Empathy and Kindness": "F1",
     "Respect for Differences": "F2",
