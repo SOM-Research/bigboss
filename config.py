@@ -20,6 +20,9 @@ The Code of Conduct is based on the following guidelines:
 5. Inappropriate Conduct: Behaving in a manner that is not suitable for the setting.
 6. Hate Speech: Using language that promotes hatred against individuals or groups.
 
+**Neutral Flags**
+A comment is neutral when dont enter in described flags.
+
 Negative comments can't have positive flags.
 Here are some examples of comments and the expected JSON output:
 
