@@ -30,6 +30,17 @@ def process_comment(comment_to_analyze):
     return response
 
 
+def should_generate_response(flags):
+    """
+    Determines whether a response should be generated based on the flags.
+
+    :param flags: A list of flags from the analysis.
+    :return: True if a response should be generated, False otherwise.
+    """
+    required_flags = {"Empathy and Kindness", "Respect for Differences", "Constructive Feedback", "Responsibility and Apology", "Common Good"}
+    return required_flags.issubset(flags)
+
+
 def generate_response(comment_text):
     """
     Generates a response to a given comment using the language model.
@@ -38,7 +49,6 @@ def generate_response(comment_text):
     :return: The generated response from the language model.
     """
     response = response_chain.invoke({"input": EXPLANATION + comment_text})
-
     return response
 
 
