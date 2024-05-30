@@ -1,5 +1,5 @@
 import json
-from config import CODE_OF_CONDUCT, FLAGS, MODEL_NAME, PROMPT_TEMPLATE
+from config import CODE_OF_CONDUCT, FLAGS, MODEL_NAME, PROMPT_TEMPLATE, RESPONSE_PROMPT_TEMPLATE, EXPLANATION
 from models.ethicanal_model import EthicAnal
 from langchain_community.llms import Ollama
 from langchain_core.output_parsers import StrOutputParser
@@ -11,9 +11,11 @@ llm = Ollama(model=MODEL_NAME)
 output_parser = StrOutputParser()
 # Define the prompt template using messages from the configuration
 prompt = ChatPromptTemplate.from_messages(PROMPT_TEMPLATE)
+response_prompt = ChatPromptTemplate.from_messages(RESPONSE_PROMPT_TEMPLATE)
 
 # Create the processing chain by combining the prompt, model, and output parser
 chain = prompt | llm | output_parser
+response_chain = response_prompt | llm | output_parser
 
 def process_comment(comment_to_analyze):
     """
@@ -24,6 +26,19 @@ def process_comment(comment_to_analyze):
     """
     response = chain.invoke({"input": CODE_OF_CONDUCT + comment_to_analyze})
     return response
+
+
+def generate_response(comment_text):
+    """
+    Generates a response to a given comment using the language model.
+
+    :param comment_text: The comment text to respond to.
+    :return: The generated response from the language model.
+    """
+    response = response_chain.invoke({"input": EXPLANATION + comment_text})
+
+    return response
+
 
 def analyze_comment(comment_json):
     """
