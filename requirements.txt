@@ -1,0 +1,7 @@
+Flask
+Flask-SQLAlchemy
+Flask-Migrate
+ollama
+langchain_core
+langchain-community 0.2.1
+flask-testing
