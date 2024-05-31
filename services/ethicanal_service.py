@@ -69,6 +69,7 @@ def analyze_and_respond(comment_json):
         if any(flag in flags for flag in REQUIRED_FLAGS):
             generated_response = generate_response(comment_to_analyze)
             if generated_response:
+                
                 response_with_user = f"@{user} {generated_response}"
                 comment_json["response_comment"] = response_with_user
 

@@ -68,7 +68,7 @@ A suitable and kind response is provided.
 The responses should be in english and one sentence.
 """
 
-PROMPT_TEMPLATE = [
+ANALYZE_PROMPT_TEMPLATE = [
     ("system", "Your task is to analyze community comments and generate a JSON output that includes the comment, a classification (positive or negative), the reasons for the classification, and a list of relevant flags based on the given Code of Conduct."),
     ("user", "{input}")
 ]
@@ -91,3 +91,5 @@ FLAGS = {
     "Inappropriate Conduct": "F10",
     "Hate Speech": "F11"
 }
+
+REQUIRED_FLAGS = {"Empathy and Kindness", "Respect for Differences", "Constructive Feedback", "Responsibility and Apology", "Common Good"}
