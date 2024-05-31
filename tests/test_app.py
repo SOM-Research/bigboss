@@ -9,7 +9,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from flask_testing import TestCase
 from routes import app
 
-class TestEthicAnalApp(TestCase):
+class TestEthicalAnalyzerApp(TestCase):
     
     def create_app(self):
         """

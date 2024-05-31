@@ -1,7 +1,6 @@
 import logging
 from flask import request, jsonify
-from services.ethicanal_service import analyze_and_respond
-from models.ethicanal_model import EthicAnal    
+from services.ethicalanalyzer import analyze_and_respond
 
 # Create a logger for this module
 logger = logging.getLogger(__name__)
