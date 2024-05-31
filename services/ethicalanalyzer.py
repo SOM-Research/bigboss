@@ -1,6 +1,6 @@
 import json
 from config import CODE_OF_CONDUCT, FLAGS, MODEL_NAME, ANALYZE_PROMPT_TEMPLATE, RESPONSE_PROMPT_TEMPLATE, EXPLANATION, REQUIRED_FLAGS
-from models.ethicanal_model import EthicAnal
+from models.ethicanalyzer import EthicalAnalyzer
 from langchain_community.llms import Ollama
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
@@ -74,7 +74,7 @@ def analyze_and_respond(comment_json):
                 comment_json["response_comment"] = response_with_user
 
         # Create an EthicAnal object with the processed comment data
-        ethicanal = EthicAnal(comment_json)
+        ethicanal = EthicalAnalyzer(comment_json)
         return ethicanal
     except Exception as e:
         raise

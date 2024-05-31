@@ -1,6 +1,6 @@
 import logging
 from flask import Flask, jsonify
-from controllers.ethicanal_controller import analyze
+from controllers.ethicalanalyzer import analyze
 
 # Initialize the Flask application
 app = Flask(__name__)
