@@ -1,6 +1,7 @@
 import logging
 from flask import request, jsonify
-from services.ethicanal_service import analyze_comment
+from services.ethicanal_service import analyze_and_respond
+from models.ethicanal_model import EthicAnal    
 
 # Create a logger for this module
 logger = logging.getLogger(__name__)
@@ -9,11 +10,11 @@ def analyze():
     """
     Flask route handler that processes a POST request to analyze a comment.
 
-    This function extracts the comment JSON from the request, analyzes it using the analyze_comment
+    This function extracts the comment JSON from the request, analyzes it using the analyze_and_respond
     function from the ethicanal_service, saves the analysis to the database, and returns the
     analyzed comment JSON as a response.
 
-    :return: A JSON response containing the analyzed comment data.
+    :return: A JSON response containing the analyzed comment data and the generated response if applicable.
     """
     try:
         # Log the receipt of a new request
@@ -24,7 +25,7 @@ def analyze():
         logger.debug(f"Request JSON: {comment_json}")
 
         # Analyze the comment and get an EthicAnal object
-        ethicanal = analyze_comment(comment_json)
+        ethicanal = analyze_and_respond(comment_json)
         logger.info(f"Comment analyzed: {ethicanal}")
 
         # Save the analyzed comment to the database

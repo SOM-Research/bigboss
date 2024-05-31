@@ -1,5 +1,5 @@
 import json
-from config import CODE_OF_CONDUCT, FLAGS, MODEL_NAME, PROMPT_TEMPLATE
+from config import CODE_OF_CONDUCT, FLAGS, MODEL_NAME, ANALYZE_PROMPT_TEMPLATE, RESPONSE_PROMPT_TEMPLATE, EXPLANATION, REQUIRED_FLAGS
 from models.ethicanal_model import EthicAnal
 from langchain_community.llms import Ollama
 from langchain_core.output_parsers import StrOutputParser
@@ -7,13 +7,17 @@ from langchain_core.prompts import ChatPromptTemplate
 
 # Initialize the language model (LLM) with the specified model name
 llm = Ollama(model=MODEL_NAME)
+
 # Initialize the output parser
 output_parser = StrOutputParser()
-# Define the prompt template using messages from the configuration
-prompt = ChatPromptTemplate.from_messages(PROMPT_TEMPLATE)
+
+# Define the prompt templates
+analyze_prompt = ChatPromptTemplate.from_messages(ANALYZE_PROMPT_TEMPLATE)
+response_prompt = ChatPromptTemplate.from_messages(RESPONSE_PROMPT_TEMPLATE)
 
 # Create the processing chain by combining the prompt, model, and output parser
-chain = prompt | llm | output_parser
+chain = analyze_prompt | llm | output_parser
+response_chain = response_prompt | llm | output_parser
 
 def process_comment(comment_to_analyze):
     """
@@ -22,31 +26,50 @@ def process_comment(comment_to_analyze):
     :param comment_to_analyze: The comment text to be analyzed.
     :return: The response from the language model as a JSON string.
     """
-    response = chain.invoke({"input": CODE_OF_CONDUCT + comment_to_analyze})
-    return response
+    return chain.invoke({"input": CODE_OF_CONDUCT + comment_to_analyze})
 
-def analyze_comment(comment_json):
+def generate_response(comment_to_respond):
     """
-    Processes a comment JSON object, analyzes it, and returns an EthicAnal object.
+    Generates a response to a given comment using the language model.
+
+    :param comment_to_analyze: The comment text to generate a response for.
+    :return: The generated response from the language model as a JSON string.
+    """
+    return response_chain.invoke({"input": EXPLANATION + comment_to_respond})
+
+def analyze_and_respond(comment_json):
+    """
+    Analyzes a comment JSON object, generates a response if certain flags are present, and returns the modified comment JSON.
 
     :param comment_json: A dictionary containing the comment data.
-    :return: An EthicAnal object with the analyzed data.
+    :return: The modified comment JSON with the analysis and possibly a generated response.
     """
-    # Extract the comment body from the JSON object
-    comment_to_analyze = comment_json["comment_body"]
+    try:
+        # Extract the comment body from the JSON object
+        comment_to_analyze = comment_json["comment_body"]
 
-    # Analyze the comment using the language model
-    result = process_comment(comment_to_analyze)
-    result_dict = json.loads(result)
+        # Analyze the comment using the language model
+        result = process_comment(comment_to_analyze)
+        
+        # Ensure the result is a valid JSON string
+        if not result:
+            raise ValueError("Received an empty response from the language model")
 
-    # Generate the list of numbered flags based on the analysis
-    flags = result_dict.get("flags", [])
-    numbered_flags = {FLAGS[flag]: flag for flag in flags if flag in FLAGS}
-    result_dict["numbered_flags"] = numbered_flags
+        result_dict = json.loads(result)
 
-    # Add the analysis results to the original JSON
-    comment_json["analysis"] = result_dict
+        # Generate the list of numbered flags based on the analysis
+        flags = result_dict.get("flags", [])
+        numbered_flags = {FLAGS[flag]: flag for flag in flags if flag in FLAGS}
+        result_dict["numbered_flags"] = numbered_flags
 
-    # Create an EthicAnal object with the processed comment data
-    ethicanal = EthicAnal(comment_json)
-    return ethicanal
+        # Add the analysis results to the original JSON
+        comment_json["analysis"] = result_dict
+        
+        generated_response = generate_response(comment_to_analyze)
+        comment_json["response_comment"] = generated_response
+
+        # Create an EthicAnal object with the processed comment data
+        ethicanal = EthicAnal(comment_json)
+        return ethicanal
+    except Exception as e:
+        raise

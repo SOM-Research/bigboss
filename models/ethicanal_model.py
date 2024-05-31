@@ -23,6 +23,8 @@ class EthicAnal:
         self.repository_name = comment_json.get("repository_name")
         self.repository_full_name = comment_json.get("repository_full_name")
         self.repository_html_url = comment_json.get("repository_html_url")
+        self.response_comment = comment_json.get("response_comment")
+
 
     def save_to_db(self):
         """
