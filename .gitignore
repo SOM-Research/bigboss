@@ -1,8 +1,2 @@
-# Python cache files
-__pycache__/
-*.py[cod]
-*.pyo
-
-# Editor specific files
-.vscode/
+**/__pycache__/
 
