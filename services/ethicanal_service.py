@@ -47,6 +47,7 @@ def analyze_and_respond(comment_json):
     try:
         # Extract the comment body from the JSON object
         comment_to_analyze = comment_json["comment_body"]
+        user = comment_json["user"]
 
         # Analyze the comment using the language model
         result = process_comment(comment_to_analyze)
@@ -65,8 +66,12 @@ def analyze_and_respond(comment_json):
         # Add the analysis results to the original JSON
         comment_json["analysis"] = result_dict
         
-        generated_response = generate_response(comment_to_analyze)
-        comment_json["response_comment"] = generated_response
+        if any(flag in flags for flag in REQUIRED_FLAGS):
+            generated_response = generate_response(comment_to_analyze)
+            if generated_response:
+                
+                response_with_user = f"@{user} {generated_response}"
+                comment_json["response_comment"] = response_with_user
 
         # Create an EthicAnal object with the processed comment data
         ethicanal = EthicAnal(comment_json)
