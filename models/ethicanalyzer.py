@@ -73,7 +73,7 @@ class EthicalAnalyzer:
         conn.commit()
         conn.close()
 
-def create_table_if_not_exists(repo_name):
+def create_table_if_not_exists():
     """
     Creates a table for the repository if it does not already exist.
 
