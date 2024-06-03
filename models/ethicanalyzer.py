@@ -8,6 +8,7 @@ class EthicalAnalyzer:
 
         :param comment_json: A dictionary containing comment data.
         """
+        self.repository_name = comment_json["repository_name"]
         self.comment_id = comment_json["comment_id"]
         self.user = comment_json["user"]
         self.user_id = comment_json["user_id"]
@@ -37,15 +38,12 @@ class EthicalAnalyzer:
         conn = get_db_connection()
         cursor = conn.cursor()
 
-        # Replace slashes in repository name to create a valid table name
-        repo_name = self.repository_name.replace("/", "_")
-
         # Ensure the table for the repository exists
-        create_table_if_not_exists(repo_name)
+        create_table_if_not_exists()
 
         # Insert the comment data into the table
-        cursor.execute(f'''
-            INSERT INTO {repo_name} (
+        cursor.execute('''
+            INSERT INTO ethicalbot (
                 comment_id, user, user_id, comment_body, created_at, updated_at, 
                 classification, reasons, numbered_flags,
                 issue_number, issue_title, issue_body, issue_url, 
@@ -87,7 +85,7 @@ def create_table_if_not_exists(repo_name):
 
     # Create the table if it does not exist
     cursor.execute(f'''
-        CREATE TABLE IF NOT EXISTS {repo_name} (
+        CREATE TABLE IF NOT EXISTS ethicalbot (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             comment_id TEXT NOT NULL,
             user TEXT NOT NULL,
