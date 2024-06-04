@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 from config import CODE_OF_CONDUCT, FLAGS, MODEL_NAME, ANALYZE_PROMPT_TEMPLATE, RESPONSE_PROMPT_TEMPLATE, EXPLANATION, REQUIRED_FLAGS
 from models.ethicanalyzer import EthicalAnalyzer
 from langchain_community.llms import Ollama
@@ -69,11 +70,11 @@ def analyze_and_respond(comment_json):
         if any(flag in flags for flag in REQUIRED_FLAGS):
             generated_response = generate_response(comment_to_analyze)
             if generated_response:
-                
                 response_with_user = f"@{user} {generated_response}"
                 comment_json["response_comment"] = response_with_user
+                comment_json["response_at"] = datetime.utcnow().isoformat()
 
-        # Create an EthicAnal object with the processed comment data
+        # Create an EthicalAnalyzer object with the processed comment data
         ethicanal = EthicalAnalyzer(comment_json)
         return ethicanal
     except Exception as e:
