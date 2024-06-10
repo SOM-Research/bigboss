@@ -7,33 +7,62 @@ logger = logging.getLogger(__name__)
 
 def analyze():
     """
-    Flask route handler that processes a POST request to analyze a comment.
+    Flask route handler that processes a POST request to analyze a comment or code of conduct.
 
-    This function extracts the comment JSON from the request, analyzes it using the analyze_and_respond
-    function from the ethicanal_service, saves the analysis to the database, and returns the
-    analyzed comment JSON as a response.
-
-    :return: A JSON response containing the analyzed comment data and the generated response if applicable.
+    :return: A JSON response containing the analyzed data.
     """
     try:
         # Log the receipt of a new request
-        logger.info("Received request to analyze comment")
+        logger.info("Received request to analyze payload")
 
         # Extract the JSON payload from the request
-        comment_json = request.json
-        logger.debug(f"Request JSON: {comment_json}")
+        payload = request.json
+        logger.debug(f"Request JSON: {payload}")
 
-        # Analyze the comment and get an EthicAnal object
-        ethicanal = analyze_and_respond(comment_json)
-        logger.info(f"Comment analyzed: {ethicanal}")
+        # Check the type of the payload
+        payload_type = payload.get('type')
+        if not payload_type:
+            raise ValueError("Payload type is not specified")
 
-        # Save the analyzed comment to the database
-        ethicanal.save_to_db()
-        logger.info("Comment saved to database")
+        # Handle the payload based on its type
+        if payload_type == 'comment':
+            return analyze_comment(payload.get('data'))
+        elif payload_type == 'code_of_conduct':
+            return analyze_code_of_conduct(payload.get('data'))
+        else:
+            raise ValueError(f"Unknown payload type: {payload_type}")
 
-        # Return the analyzed comment JSON as a response
-        return jsonify(comment_json)
     except Exception as e:
         # Log any exceptions that occur
-        logger.error(f"Error analyzing comment: {e}", exc_info=True)
+        logger.error(f"Error processing payload: {e}", exc_info=True)
         return jsonify({"error": str(e)}), 500
+
+def analyze_comment(comment_json):
+    """
+    Analyzes a comment payload.
+
+    :param comment_json: The comment data in JSON format.
+    :return: A JSON response containing the analyzed comment data.
+    """
+    if not comment_json:
+        raise ValueError("No comment data provided")
+    ethicanal = analyze_and_respond(comment_json)
+    logger.info(f"Comment analyzed: {ethicanal}")
+    ethicanal.save_to_db()
+    logger.info("Comment saved to database")
+    return jsonify(comment_json)
+
+def analyze_code_of_conduct(code_of_conduct_text):
+    """
+    Analyzes a code of conduct payload.
+
+    :param code_of_conduct_text: The code of conduct data in text format.
+    :return: A JSON response confirming receipt and saving of the code of conduct.
+    """
+    if not code_of_conduct_text:
+        raise ValueError("No code of conduct data provided")
+    # Process and save the code of conduct
+    with open('code_of_conduct_received.md', 'w') as file:
+        file.write(code_of_conduct_text)
+    logger.info("Code of Conduct received and saved")
+    return jsonify({"message": "Code of Conduct received", "data": code_of_conduct_text})
