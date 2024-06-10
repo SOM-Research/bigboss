@@ -20,7 +20,7 @@ EthicalAnalyzer is a server application designed to analyze and respond to comme
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-repository/ethicalanalyzer.git
+git clone https://github.com/your-repository/bigboss.git
 cd ethicalanalyzer
 ```
 ### 2. Install Dependencies
