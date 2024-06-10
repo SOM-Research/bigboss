@@ -21,7 +21,7 @@ EthicalAnalyzer is a server application designed to analyze and respond to comme
 
 ```bash
 git clone https://github.com/your-repository/bigboss.git
-cd ethicalanalyzer
+cd bigboss
 ```
 ### 2. Install Dependencies
 Make sure you have Python installed. Then, install the required Python packages:
