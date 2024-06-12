@@ -1,6 +1,6 @@
-
-
 MODEL_NAME = "mixtral:8x22b"
+
+# ETHICALANALYZER
 
 CODE_OF_CONDUCT = """
 The Code of Conduct is based on the following guidelines:
@@ -11,6 +11,7 @@ The Code of Conduct is based on the following guidelines:
 3. Constructive Feedback: Providing feedback that is helpful and aimed at improvement.
 4. Responsibility and Apology: Taking responsibility for one's actions and apologizing when necessary.
 5. Common Good: Acting in ways that benefit the broader community.
+6. Inclusive language: Using inclusive language.
 
 **Negative Flags:**
 1. Sexualized Language or Imagery: Using language or imagery that is inappropriate and sexual in nature.
@@ -62,7 +63,7 @@ Here are some examples of comments and the expected JSON output:
 **Comment:**
 """
 
-EXPLANATION = """
+EXPLANATION_ETHICALANALYZER = """
 This response was generated to thank a user who left a comment on a GitHub issue.
 A suitable and kind response is provided.
 The responses should be in english and one sentence.
@@ -93,3 +94,69 @@ FLAGS = {
 }
 
 REQUIRED_FLAGS = {"Empathy and Kindness", "Respect for Differences", "Constructive Feedback", "Responsibility and Apology", "Common Good"}
+
+
+# COCANALYZER
+
+COCANALYZER_PROMPT_TEMPLATE = [
+    ("system", "You are an ethical analyzer for GitHub repositories. Analyze the following Code of Conduct for the presence of specific flags."),
+    ("user", "{input}")
+]
+
+EXPLANATION_COCANALYZER = """
+Analyze the provided Code of Conduct text for the presence of the following flags (Positive and Negative). Respond in a structured JSON format listing any flags found.
+
+Example Output:
+{
+  "positive_flags": [
+    "F1: Empathy and Kindness",
+    "F2: Respect for Differences"
+  ],
+  "negative_flags": [
+    "F6: Sexualized Language or Imagery"
+  ]
+}
+
+Example Output:
+{
+  "positive_flags": [
+    "F3: Constructive Feedback",
+    "F4: Responsibility and Apology"
+  ],
+  "negative_flags": [
+    "F7: Insulting or Derogatory Comments"
+  ]
+}
+
+Example Output:
+{
+  "positive_flags": [
+    "F5: Common Good"
+  ],
+  "negative_flags": [
+    "F8: Public or Private Harassment",
+    "F9: Publishing Private Information"
+  ]
+}
+"""
+
+FLAGS_COCANALYZER = """
+**FLAGS**:
+**Positive Flags:**
+F1: Empathy and Kindness: Demonstrating understanding and compassion towards others.
+F2: Respect for Differences: Valuing diverse perspectives and backgrounds.
+F3: Constructive Feedback: Providing feedback that is helpful and aimed at improvement.
+F4: Responsibility and Apology: Taking responsibility for one's actions and apologizing when necessary.
+F5: Common Good: Acting in ways that benefit the broader community.
+F6. Inclusive language: Using inclusive language.
+
+**Negative Flags:**
+F7: Sexualized Language or Imagery: Using language or imagery that is inappropriate and sexual in nature.
+F8: Insulting or Derogatory Comments: Making comments that insult or demean others.
+F9: Public or Private Harassment: Engaging in behavior that intimidates or harasses others.
+F10: Publishing Private Information: Sharing private information about others without consent.
+F11: Inappropriate Conduct: Behaving in a manner that is not suitable for the setting.
+F12: Hate Speech: Using language that promotes hatred against individuals or groups.
+
+**CODE_OF_CONDUCT:**
+"""
