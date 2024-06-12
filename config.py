@@ -11,7 +11,7 @@ The Code of Conduct is based on the following guidelines:
 3. Constructive Feedback: Providing feedback that is helpful and aimed at improvement.
 4. Responsibility and Apology: Taking responsibility for one's actions and apologizing when necessary.
 5. Common Good: Acting in ways that benefit the broader community.
-6. Inclusive language: Using inclusive language.
+6. Inclusive Language: Using inclusive language.
 
 **Negative Flags:**
 1. Sexualized Language or Imagery: Using language or imagery that is inappropriate and sexual in nature.
@@ -85,15 +85,16 @@ FLAGS = {
     "Constructive Feedback": "F3",
     "Responsibility and Apology": "F4",
     "Common Good": "F5",
-    "Sexualized Language or Imagery": "F6",
-    "Insulting or Derogatory Comments": "F7",
-    "Public or Private Harassment": "F8",
-    "Publishing Private Information": "F9",
-    "Inappropriate Conduct": "F10",
-    "Hate Speech": "F11"
+    "Inclusive Language": "F6",
+    "Sexualized Language or Imagery": "F7",
+    "Insulting or Derogatory Comments": "F8",
+    "Public or Private Harassment": "F9",
+    "Publishing Private Information": "F10",
+    "Inappropriate Conduct": "F11",
+    "Hate Speech": "F12"
 }
 
-REQUIRED_FLAGS = {"Empathy and Kindness", "Respect for Differences", "Constructive Feedback", "Responsibility and Apology", "Common Good"}
+REQUIRED_FLAGS = {"Empathy and Kindness", "Respect for Differences", "Constructive Feedback", "Responsibility and Apology", "Common Good", "Inclusive Language"}
 
 
 # COCANALYZER
@@ -148,7 +149,7 @@ F2: Respect for Differences: Valuing diverse perspectives and backgrounds.
 F3: Constructive Feedback: Providing feedback that is helpful and aimed at improvement.
 F4: Responsibility and Apology: Taking responsibility for one's actions and apologizing when necessary.
 F5: Common Good: Acting in ways that benefit the broader community.
-F6. Inclusive language: Using inclusive language.
+F6. Inclusive Language: Using inclusive language.
 
 **Negative Flags:**
 F7: Sexualized Language or Imagery: Using language or imagery that is inappropriate and sexual in nature.
