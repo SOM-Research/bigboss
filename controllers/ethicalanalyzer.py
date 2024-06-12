@@ -1,6 +1,8 @@
 import logging
 from flask import request, jsonify
 from services.ethicalanalyzer import analyze_and_respond
+from services.cocanalyzer import process_code_of_conduct
+from models.cocanalyzer import CodeOfConductAnalyzer
 
 # Create a logger for this module
 logger = logging.getLogger(__name__)
@@ -28,7 +30,7 @@ def analyze():
         if payload_type == 'comment':
             return analyze_comment(payload.get('data'))
         elif payload_type == 'code_of_conduct':
-            return analyze_code_of_conduct(payload.get('data'))
+            return analyze_code_of_conduct(payload)
         else:
             raise ValueError(f"Unknown payload type: {payload_type}")
 
@@ -52,17 +54,24 @@ def analyze_comment(comment_json):
     logger.info("Comment saved to database")
     return jsonify(comment_json)
 
-def analyze_code_of_conduct(code_of_conduct_text):
+def analyze_code_of_conduct(coc_analysis_json):
     """
     Analyzes a code of conduct payload.
 
-    :param code_of_conduct_text: The code of conduct data in text format.
+    :param coc_analysis_json: The code of conduct data in JSON format.
     :return: A JSON response confirming receipt and saving of the code of conduct.
     """
-    if not code_of_conduct_text:
+    if not coc_analysis_json:
         raise ValueError("No code of conduct data provided")
-    # Process and save the code of conduct
-    with open('code_of_conduct_received.md', 'w') as file:
-        file.write(code_of_conduct_text)
-    logger.info("Code of Conduct received and saved")
-    return jsonify({"message": "Code of Conduct received", "data": code_of_conduct_text})
+    
+    # Analyze the Code of Conduct
+    analysis_result = process_code_of_conduct(coc_analysis_json)
+    
+    # Create a CodeOfConductAnalyzer object with the processed data
+    coc_analyzer = CodeOfConductAnalyzer(analysis_result)
+    
+    # Save the analysis to the database
+    coc_analyzer.save_to_db()
+    
+    logger.info("Code of Conduct received and analyzed")
+    return jsonify({"message": "Code of Conduct analyzed", "data": analysis_result})
