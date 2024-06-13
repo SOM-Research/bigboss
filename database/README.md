@@ -19,7 +19,7 @@ This project requires a SQLite database that is not included in the repository f
    import sqlite3
 
    # Connect to the database (this will create it if it doesn't exist)
-   conn = sqlite3.connect('database/ethicalbot.db')
+   conn = sqlite3.connect('database/conductbot.db')
 
    # Create a cursor
    cursor = conn.cursor()

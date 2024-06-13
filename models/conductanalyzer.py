@@ -1,10 +1,10 @@
 import json
 from database import get_db_connection
 
-class EthicalAnalyzer:
+class conductAnalyzer:
     def __init__(self, comment_json):
         """
-        Initializes an instance of the EthicalAnalyzer class with data from a JSON object.
+        Initializes an instance of the conductAnalyzer class with data from a JSON object.
 
         :param comment_json: A dictionary containing comment data.
         """
@@ -30,7 +30,7 @@ class EthicalAnalyzer:
 
     def save_to_db(self):
         """
-        Saves the current instance of EthicalAnalyzer to the database.
+        Saves the current instance of conductAnalyzer to the database.
 
         The function establishes a connection to the database, ensures the target table exists,
         and inserts the instance's data into the corresponding table.

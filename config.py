@@ -1,6 +1,6 @@
 MODEL_NAME = "mixtral:8x22b"
 
-# ETHICALANALYZER
+# conductANALYZER
 
 CODE_OF_CONDUCT = """
 The Code of Conduct is based on the following guidelines:
@@ -63,7 +63,7 @@ Here are some examples of comments and the expected JSON output:
 **Comment:**
 """
 
-EXPLANATION_ETHICALANALYZER = """
+EXPLANATION_conductANALYZER = """
 This response was generated to thank a user who left a comment on a GitHub issue.
 A suitable and kind response is provided.
 The responses should be in english and one sentence.
@@ -100,7 +100,7 @@ REQUIRED_FLAGS = {"Empathy and Kindness", "Respect for Differences", "Constructi
 # COCANALYZER
 
 COCANALYZER_PROMPT_TEMPLATE = [
-    ("system", "You are an ethical analyzer for GitHub repositories. Analyze the following Code of Conduct for the presence of specific flags."),
+    ("system", "You are an conduct analyzer for GitHub repositories. Analyze the following Code of Conduct for the presence of specific flags."),
     ("user", "{input}")
 ]
 

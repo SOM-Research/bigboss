@@ -1,6 +1,6 @@
 import logging
 from flask import request, jsonify
-from services.ethicalanalyzer import analyze_and_respond
+from services.conductanalyzer import analyze_and_respond
 from services.cocanalyzer import process_code_of_conduct
 from models.cocanalyzer import CodeOfConductAnalyzer
 
@@ -48,9 +48,9 @@ def analyze_comment(comment_json):
     """
     if not comment_json:
         raise ValueError("No comment data provided")
-    ethicanal = analyze_and_respond(comment_json)
-    logger.info(f"Comment analyzed: {ethicanal}")
-    ethicanal.save_to_db()
+    conductanalyzer = analyze_and_respond(comment_json)
+    logger.info(f"Comment analyzed: {conductanalyzer}")
+    conductanalyzer.save_to_db()
     logger.info("Comment saved to database")
     return jsonify(comment_json)
 

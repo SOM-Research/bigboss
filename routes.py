@@ -1,6 +1,6 @@
 import logging
 from flask import Flask, jsonify
-from controllers.ethicalanalyzer import analyze
+from controllers.conductanalyzer import analyze
 
 # Initialize the Flask application
 app = Flask(__name__)
@@ -13,7 +13,7 @@ def analyze_route():
     """
     Flask route for POST requests to /analyze.
 
-    This route calls the analyze function from ethicanal_controller to process and analyze
+    This route calls the analyze function from conductanalyzer_controller to process and analyze
     the comment data provided in the request.
     
     :return: The response from the analyze function.
