@@ -2,7 +2,7 @@ import os
 import sqlite3
 
 # Define the path to the SQLite database file.
-database_path = os.path.join(os.path.dirname(__file__), 'database', 'ethicalbot.db')
+database_path = os.path.join(os.path.dirname(__file__), 'database', 'conductbot.db')
 
 def get_db_connection():
     """

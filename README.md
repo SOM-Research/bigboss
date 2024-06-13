@@ -1,12 +1,12 @@
 # BigBOSS
 
-This repository contains the source code of the bots develoepd to check ethical issues in OSS projects.
+This repository contains the source code of the bots develoepd to check conduct issues in OSS projects.
 
-# EthicalAnalyzer Server
+# conductAnalyzer Server
 
 ## Introduction
 
-EthicalAnalyzer is a server application designed to analyze and respond to comments based on a predefined code of conduct. It leverages a language model to classify comments and generate appropriate responses when necessary.
+conductAnalyzer is a server application designed to analyze and respond to comments based on a predefined code of conduct. It leverages a language model to classify comments and generate appropriate responses when necessary.
 
 ## Prerequisites
 
@@ -43,9 +43,9 @@ Set up your database. By default, SQLite is used. Ensure the get_db_connection f
 
 - `app.py`: Entry point for the Flask application.
 - `config.py`: Contains configuration constants.
-- `controllers/ethicalanalyzer.py`: Contains the route handler for analyzing comments.
-- `models/ethicalanalyzer.py`: Defines the EthicalAnalyzer model and database interaction methods.
-- `services/ethicalanalyzer.py`: Handles comment analysis and response generation.
+- `controllers/conductanalyzer.py`: Contains the route handler for analyzing comments.
+- `models/conductanalyzer.py`: Defines the conductAnalyzer model and database interaction methods.
+- `services/conductanalyzer.py`: Handles comment analysis and response generation.
 - `routes.py`: Defines the Flask routes.
 
 ## Running the Application
@@ -119,14 +119,14 @@ The server will be accessible at `http://0.0.0.0:5000`.
 ```
 ## Using the Service
 
-To use the EthicalAnalyzer service in your GitHub repository, follow these steps to configure the workflow and connect it to your server.
+To use the conductAnalyzer service in your GitHub repository, follow these steps to configure the workflow and connect it to your server.
 
 ### 1. Setup Secrets in GitHub
 
 Ensure you have added the following secrets to your GitHub repository:
 
 - `GITHUB_TOKEN`: GitHub token for authentication.
-- `SERVER_URL`: URL of your EthicalAnalyzer server.
+- `SERVER_URL`: URL of your conductAnalyzer server.
 - `SENDINBLUE_API_KEY`: Sendinblue API key for sending email notifications.
 - `EMAIL_FROM`: Sender email address for notifications.
 - `EMAIL_TO`: Recipient email address for notifications.

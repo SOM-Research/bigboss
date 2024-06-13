@@ -1,7 +1,7 @@
 import json
 from datetime import datetime
-from config import CODE_OF_CONDUCT, FLAGS, MODEL_NAME, ANALYZE_PROMPT_TEMPLATE, RESPONSE_PROMPT_TEMPLATE, EXPLANATION_ETHICALANALYZER, REQUIRED_FLAGS
-from models.ethicanalyzer import EthicalAnalyzer
+from config import CODE_OF_CONDUCT, FLAGS, MODEL_NAME, ANALYZE_PROMPT_TEMPLATE, RESPONSE_PROMPT_TEMPLATE, EXPLANATION_conductANALYZER, REQUIRED_FLAGS
+from models.conductanalyzeryzer import conductAnalyzer
 from langchain_community.llms import Ollama
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
@@ -36,7 +36,7 @@ def generate_response(comment_to_respond):
     :param comment_to_analyze: The comment text to generate a response for.
     :return: The generated response from the language model as a JSON string.
     """
-    return response_chain.invoke({"input": EXPLANATION_ETHICALANALYZER + comment_to_respond})
+    return response_chain.invoke({"input": EXPLANATION_conductANALYZER + comment_to_respond})
 
 def analyze_and_respond(comment_json):
     """
@@ -74,8 +74,8 @@ def analyze_and_respond(comment_json):
                 comment_json["response_comment"] = response_with_user
                 comment_json["response_at"] = datetime.utcnow().isoformat()
 
-        # Create an EthicalAnalyzer object with the processed comment data
-        ethicanal = EthicalAnalyzer(comment_json)
-        return ethicanal
+        # Create an conductAnalyzer object with the processed comment data
+        conductanalyzer = conductAnalyzer(comment_json)
+        return conductanalyzer
     except Exception as e:
         raise
