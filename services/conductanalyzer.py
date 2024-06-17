@@ -1,7 +1,7 @@
 import json
 from datetime import datetime
-from config import CODE_OF_CONDUCT, FLAGS, MODEL_NAME, ANALYZE_PROMPT_TEMPLATE, RESPONSE_PROMPT_TEMPLATE, EXPLANATION_conductANALYZER, REQUIRED_FLAGS
-from models.conductanalyzeryzer import conductAnalyzer
+from config import CODE_OF_CONDUCT, FLAGS, MODEL_NAME, ANALYZE_PROMPT_TEMPLATE, RESPONSE_PROMPT_TEMPLATE, EXPLANATION_CONDUCTANALYZER, REQUIRED_FLAGS
+from models.conductanalyzer import conductAnalyzer
 from langchain_community.llms import Ollama
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
@@ -36,7 +36,7 @@ def generate_response(comment_to_respond):
     :param comment_to_analyze: The comment text to generate a response for.
     :return: The generated response from the language model as a JSON string.
     """
-    return response_chain.invoke({"input": EXPLANATION_conductANALYZER + comment_to_respond})
+    return response_chain.invoke({"input": EXPLANATION_CONDUCTANALYZER + comment_to_respond})
 
 def analyze_and_respond(comment_json):
     """
