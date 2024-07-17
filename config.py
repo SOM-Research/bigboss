@@ -95,63 +95,120 @@ REQUIRED_FLAGS = {"Demonstrating empathy and kindness toward other people", "Bei
 
 # COCANALYZER
 
-COCANALYZER_PROMPT_TEMPLATE = [
-    ("system", "You are a conduct analyzer for GitHub repositories. Analyze the following Code of Conduct for the presence of specific flags."),
-    ("user", "{input}")
-]
+COC_KEYWORDS = {
+    "F1": [
+        "being kind",
+        "empathy",
+        "empathic",
+        "kindness",
+    ],
 
-EXPLANATION_COCANALYZER = """
-Analyze the provided Code of Conduct text for the presence of the following flags (Positive and Negative). Respond in a structured JSON format listing any flags found.
+    "F2": [
+        "respect in your speech"
+        "show respect",
+        "with respect",
+        "respect towards others",
+        "be respectful",
+        "respect for differences",
+        "different viewpoints",
+        "differing viewpoints",
+        "differing opinions",
+        "diverse perspectives",
+        "open to different possibilities",
+        "eliminate biases",
+        "accommodate differences",
 
-Example Output:
-{
-  "positive_flags": [
-    "F1: Demonstrating empathy and kindness toward other people",
-    "F2: Being respectful of differing opinions, viewpoints, and experiences"
-  ],
-  "negative_flags": [
-    "F6: The use of sexualized language or imagery, and sexual attention or advances of any kind"
-  ]
+    ],
+    "F3": [
+        "constructive feedback",
+        "constructive criticism",
+        "respectful criticism",
+        "tactful feedback",
+        "gracefully accepting",
+        "receptive to comments",
+        "constructively resolve conflict",
+        "feedback for improvement",
+        "thoughtful addressing"
+    ],
+    "F4": [
+        "responsibility and apologizing",
+        "apologize",
+        "take responsibility",
+        "acknowledge mistakes",
+        "admit fault",
+    ],
+    "F5": [
+        "be collaborative",
+        "best for the community",
+        "overall community",
+        "common good",
+        "community benefit",
+        "collective interest",
+        "broader community",
+        "community focus",
+    ],
+    "F6": [
+        "sexist",
+        "sexualized comments",
+        "sexual language",
+        "sexualized language",
+        "sexual imagery",
+        "inappropriate sexual content",
+        "sexually explicit",
+        "unwelcome sexual attention",
+        "sexually suggestive",
+        "groping",
+        "sexual advances",
+        "sexual jokes",
+        "sexual comments"
+    ],
+    "F7": [
+        "trolling", 
+        "insulting",
+        "derogatory comments",
+        "derogatory remarks",
+        "demeaning language",
+        "insults",
+        "personal attacks",
+        "ridicule",
+        "offensive jokes",
+    ],
+    "F8": [
+        "harass",
+        "harassing",
+        "harassment",
+        "stalking",
+        "intimidation",
+        "bullying",
+        "threatened",
+        "threats",
+        "persistent unwanted contact",
+    ],
+    "F9": [
+        "private information",
+        "publishing private information",
+        "doxxing",
+        "doxing",
+        "sharing personal data",
+        "leaking private info",
+        "exposing private details",
+        "unconsented disclosure",
+        "confidential information",
+        "privacy breach",
+        "revealing personal information",
+        "unauthorized sharing"
+    ],
+    "F10": [
+        "considered inappropriate",
+        "professional setting",
+        "behaving professionally",
+        "inappropriate conduct",
+        "unprofessional behavior",
+        "professional audience",
+        "inappropriate actions",
+        "unsuitable behavior",
+        "unacceptable conduct",
+        "improper behavior",
+        "inappropriate language"
+    ],
 }
-
-Example Output:
-{
-  "positive_flags": [
-    "F3: Giving and gracefully accepting constructive feedback",
-    "F4: Accepting responsibility and apologizing to those affected by our mistakes, and learning from the experience"
-  ],
-  "negative_flags": [
-    "F7: Trolling, insulting or derogatory comments, and personal or political attacks"
-  ]
-}
-
-Example Output:
-{
-  "positive_flags": [
-    "F5: Focusing on what is best not just for us as individuals, but for the overall community"
-  ],
-  "negative_flags": [
-    "F8: Public or private harassment",
-    "F9: Publishing others’ private information, such as a physical or email address, without their explicit permission"
-  ]
-}
-"""
-
-FLAGS_COCANALYZER = """
-**FLAGS**:
-**Positive Flags:**
-F1: Demonstrating empathy and kindness toward other people
-F2: Being respectful of differing opinions, viewpoints, and experiences
-F3: Giving and gracefully accepting constructive feedback
-F4: Accepting responsibility and apologizing to those affected by our mistakes, and learning from the experience
-F5: Focusing on what is best not just for us as individuals, but for the overall community
-
-**Negative Flags:**
-F6: The use of sexualized language or imagery, and sexual attention or advances of any kind
-F7: Trolling, insulting or derogatory comments, and personal or political attacks
-F8: Public or private harassment
-F9: Publishing others’ private information, such as a physical or email address, without their explicit permission
-F10: Other conduct which could reasonably be considered inappropriate in a professional setting
-
-**CODE_OF_CONDUCT:**
-"""

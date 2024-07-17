@@ -64,7 +64,7 @@ def analyze_code_of_conduct(coc_analysis_json):
     if not coc_analysis_json:
         raise ValueError("No code of conduct data provided")
     
-    # Analyze the Code of Conduct
+    # Process the Code of Conduct
     analysis_result = process_code_of_conduct(coc_analysis_json)
     
     # Create a CodeOfConductAnalyzer object with the processed data
