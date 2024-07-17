@@ -12,8 +12,8 @@ class CodeOfConductAnalyzer:
         self.repository_url = coc_analysis_json["repository_url"]
         self.analyzed_at = coc_analysis_json["analyzed_at"]
         self.code_of_conduct = coc_analysis_json["code_of_conduct"]
-        self.positive_flags = coc_analysis_json.get("positive_flags", [])
-        self.negative_flags = coc_analysis_json.get("negative_flags", [])
+        self.contributor_covenant_version = coc_analysis_json["contributor_covenant_version"]
+        self.flags = coc_analysis_json.get("flags", [])
         
     def save_to_db(self):
         """
@@ -29,15 +29,15 @@ class CodeOfConductAnalyzer:
         # Insert the analysis data into the table
         cursor.execute('''
             INSERT INTO coc_analysis (
-                repository_name, repository_url, analyzed_at, code_of_conduct, positive_flags, negative_flags
+                repository_name, repository_url, analyzed_at, code_of_conduct, contributor_covenant_version, flags
             ) VALUES (?, ?, ?, ?, ?, ?)
         ''', (
             self.repository_name,
             self.repository_url,
             self.analyzed_at,
             self.code_of_conduct,
-            json.dumps(self.positive_flags),
-            json.dumps(self.negative_flags)
+            self.contributor_covenant_version,
+            json.dumps(self.flags)
         ))
 
         # Commit the transaction and close the connection
@@ -60,8 +60,8 @@ def create_table_if_not_exists():
             repository_url TEXT NOT NULL,
             analyzed_at TEXT NOT NULL,
             code_of_conduct TEXT NOT NULL,
-            positive_flags TEXT,
-            negative_flags TEXT
+            contributor_covenant_version TEXT NOT NULL,
+            flags TEXT
         )
     ''')
 
