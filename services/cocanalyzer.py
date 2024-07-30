@@ -139,6 +139,7 @@ def get_existing_analysis(repository_name, repository_url):
     
     return None
 
+
 def process_code_of_conduct(coc_analysis_json):
     """
     Process the Code of Conduct JSON object and return the analysis results.
@@ -156,16 +157,12 @@ def process_code_of_conduct(coc_analysis_json):
     new_analysis_result["repository_url"] = repository_url
     new_analysis_result["analyzed_at"] = datetime.utcnow().isoformat()
     new_analysis_result["code_of_conduct"] = code_of_conduct_text
-    new_analysis_result["status"] = "analyzed"
 
     # Check if it has already been analyzed
     existing_analysis_result = get_existing_analysis(repository_name, repository_url)
     if existing_analysis_result:
-        # If the analysis results are different, update the status and return the new results
-        if existing_analysis_result["flags"] != new_analysis_result["flags"]:
-            return new_analysis_result
-        
-        # If the analysis results are the same, return the existing results with the already_analyzed status
-        return existing_analysis_result
+        new_analysis_result["status"] = "already_analyzed"
+    else:
+        new_analysis_result["status"] = "analyzed"
 
     return new_analysis_result
