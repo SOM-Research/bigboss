@@ -165,13 +165,11 @@ jobs:
 ```
 # Contributing
 
-This project is part of a research line of the [SOM Research Lab](https://som-research.uoc.edu/), but we are open to contributions from the community. Any comment is more than welcome!
-
 If you are interested in contributing to this project, please read the [CONTRIBUTING.md](CONTRIBUTING.md) file.
 
 # Code of Conduct
 
-At SOM Research Lab we are dedicated to creating and maintaining welcoming, inclusive, safe, and harassment-free development spaces. Anyone participating will be subject to and agrees to sign on to our [Code of Conduct](CODE_OF_CONDUCT.md).
+We are dedicated to creating and maintaining welcoming, inclusive, safe, and harassment-free development spaces. Anyone participating will be subject to and agrees to sign on to our [Code of Conduct](CODE_OF_CONDUCT.md).
 
 # Governance
 
