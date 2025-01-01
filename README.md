@@ -8,7 +8,6 @@ This repository contains the source code for **BigBOSS**, a tool designed to mon
 
 ---
 
-
 ## **Overview**
 
 This project provides:
@@ -65,11 +64,12 @@ To ensure full functionality, the following GitHub Actions must be configured in
 
 1. **`Comment Analyzer`**: Handles analysis of comments in issues, pull requests, and discussions, and triggers appropriate actions such as generating responses or notifying repository owners.
 
-2. **`Code of Conduct Initializer`**: Adds or updates the `CODE_OF_CONDUCT.md` file in repositories where it is missing or outdated.
+2. **`Code of Conduct Analyzer`**: Processes and sends Code of Conduct files to the analysis server for evaluation.
 
-3. **`Issue Manager`**: Creates issues for repositories with incomplete or missing Code of Conduct guidelines.
+3. **`Code of Conduct Initializer`**: Adds or updates the `CODE_OF_CONDUCT.md` file in repositories where it is missing or outdated.
 
-4. **`Send Code of Conduct`**: Processes and sends Code of Conduct files to the analysis server for evaluation.
+4. **`Issue Manager`**: Creates issues for repositories with incomplete or missing Code of Conduct guidelines.
+
 
 ### **Setup Instructions for Actions**
 
