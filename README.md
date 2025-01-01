@@ -1,12 +1,13 @@
 
 # **BigBOSS**
 
-This repository contains the source code for **BigBOSS**, a tool designed to analyze contributions in Open Source Software (OSS) projects. The project currently includes two services:
+This repository contains the source code for **BigBOSS**, a tool designed to monitor and analyze contributions and **Codes of Conduct (CoC)** in Open Source Software (OSS) projects. The project includes two main services:
 
 - **`conductAnalyzer`**: Analyzes comments for adherence to a predefined code of conduct and generates appropriate responses.
 - **`cocAnalyzer`**: Processes and evaluates code of conduct (CoC) files, identifies ethical patterns, and detects compliance with Contributor Covenant guidelines.
 
 ---
+
 
 ## **Overview**
 
@@ -52,14 +53,37 @@ Download the required model using Ollama:
 ```bash
 ollama download mixtral:8x22b
 ```
+--- 
 
-### 4. Verify Configuration
-Update `config.py` with the necessary constants and variables, including:
+## **GitHub Actions Integration**
 
-- **MODEL_NAME**: Language model to use.
-- **CODE_OF_CONDUCT**: Text of the predefined Code of Conduct.
-- **FLAGS**: Predefined categories for behavior analysis.
-- **COC_KEYWORDS**: Keywords for detecting Contributor Covenant compliance.
+BigBOSS relies on a set of **GitHub Actions** to enable seamless monitoring and analysis of contributions and Codes of Conduct in OSS repositories. These actions automate workflows for analyzing comments, managing Code of Conduct files, and creating issues or pull requests as needed.
+
+### **Required Actions**
+
+To ensure full functionality, the following GitHub Actions must be configured in your repository:
+
+1. **`Comment Analyzer`**: Handles analysis of comments in issues, pull requests, and discussions, and triggers appropriate actions such as generating responses or notifying repository owners.
+
+2. **`Code of Conduct Initializer`**: Adds or updates the `CODE_OF_CONDUCT.md` file in repositories where it is missing or outdated.
+
+3. **`Issue Manager`**: Creates issues for repositories with incomplete or missing Code of Conduct guidelines.
+
+4. **`Send Code of Conduct`**: Processes and sends Code of Conduct files to the analysis server for evaluation.
+
+### **Setup Instructions for Actions**
+
+Ensure the following steps are completed to integrate the actions:
+- Add the **required secrets** (e.g., `GITHUB_TOKEN`, `SERVER_URL`, `BOT_USER`, `BOT_TOKEN`) to your GitHub repository.
+- Include the appropriate workflow files (e.g., `.github/workflows/comment-analyzer.yml`) in your repository.
+- Configure the actions with the necessary inputs to match your project's requirements.
+
+### **Benefits of Integration**
+
+By utilizing GitHub Actions, BigBOSS provides:
+- Real-time analysis of contributions and Code of Conduct files.
+- Automated feedback and moderation for comments.
+- Streamlined updates to Code of Conduct files and documentation.
 
 ---
 
@@ -127,13 +151,6 @@ Processes and evaluates Code of Conduct (CoC) files for compliance and ethical p
 
 ---
 
-## **Example Workflow**
-
-1. Send a comment or CoC file for analysis to the `/analyze` endpoint.
-2. Retrieve the analysis result, including flags, classifications, and generated responses.
-3. Access the saved results in the SQLite database for further processing or auditing.
-
----
 
 ## **Contributing**
 
