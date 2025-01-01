@@ -110,11 +110,24 @@ Analyzes comments for ethical and professional behavior. Generates responses for
 **Payload** (example):
 ```json
 {
-    "type": "comment",
-    "data": {
-        "comment_body": "Thank you for your help!",
-        "user": "user123"
-    }
+    "comment_id": "12345",
+    "event_type": "issue_comment",
+    "user": "user123",
+    "user_id": "67890",
+    "user_avatar_url": "https://example.com/avatar.jpg",
+    "user_html_url": "https://github.com/user123",
+    "user_type": "User",
+    "comment_body": "Thank you for your help!",
+    "created_at": "2023-01-01T00:00:00Z",
+    "updated_at": "2023-01-01T00:00:00Z",
+    "event_number": "1",
+    "event_title": "Issue title",
+    "event_body": "Issue body",
+    "event_url": "https://github.com/repo/issues/1",
+    "comment_url": "https://github.com/repo/issues/1#issuecomment-1",
+    "repository_name": "repo",
+    "response_comment": null,
+    "response_at": null
 }
 ```
 
