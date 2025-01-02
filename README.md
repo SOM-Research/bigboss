@@ -78,13 +78,6 @@ Ensure the following steps are completed to integrate the actions:
 - Include the appropriate workflow files (e.g., `.github/workflows/comment-analyzer.yml`) in your repository.
 - Configure the actions with the necessary inputs to match your project's requirements.
 
-### **Benefits of Integration**
-
-By utilizing GitHub Actions, BigBOSS provides:
-- Real-time analysis of contributions and Code of Conduct files.
-- Automated feedback and moderation for comments.
-- Streamlined updates to Code of Conduct files and documentation.
-
 ---
 
 ## **Running the Application**
