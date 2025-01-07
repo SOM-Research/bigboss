@@ -6,6 +6,8 @@ This repository contains the source code for **BigBOSS**, a tool designed to mon
 - **`conductAnalyzer`**: Analyzes comments for adherence to a predefined code of conduct and generates appropriate responses.
 - **`cocAnalyzer`**: Processes and evaluates code of conduct (CoC) files, identifies ethical patterns, and detects compliance with Contributor Covenant guidelines.
 
+These services are integrated with GitHub Actions to automate the analysis and management of comments and CoC files in OSS repositories. See the [GitHub Actions Integration](#github-actions-integration) section for more details.
+
 ---
 
 ## **Overview**
