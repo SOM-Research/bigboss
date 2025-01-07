@@ -1,71 +1,108 @@
-# BigBOSS
 
-This repository contains the source code of the bots develoepd to check conduct issues in OSS projects.
+# **BigBOSS**
 
-# conductAnalyzer Server
+This repository contains the source code for **BigBOSS**, a tool designed to monitor and analyze contributions and **Codes of Conduct (CoC)** in Open Source Software (OSS) projects. The project includes two main services:
 
-## Introduction
+- **`conductAnalyzer`**: Analyzes comments for adherence to a predefined code of conduct and generates appropriate responses.
+- **`cocAnalyzer`**: Processes and evaluates code of conduct (CoC) files, identifies ethical patterns, and detects compliance with Contributor Covenant guidelines.
 
-conductAnalyzer is a server application designed to analyze and respond to comments based on a predefined code of conduct. It leverages a language model to classify comments and generate appropriate responses when necessary.
+These services are integrated with GitHub Actions to automate the analysis and management of comments and CoC files in OSS repositories. See the [GitHub Actions Integration](#github-actions-integration) section for more details.
 
-## Prerequisites
+---
+
+## **Overview**
+
+This project provides:
+
+- Scripts for:
+  - Detecting and analyzing **comments** for appropriate behavior (**conductAnalyzer**).
+  - Detecting and analyzing **Code of Conduct (CoC)** content (**cocAnalyzer**).
+  - Evaluating alignment with **Contributor Covenant** guidelines.
+  - Extracting ethical flags from comments and CoC files based on predefined patterns.
+
+---
+
+## **Requirements**
 
 - Python 3.8 or higher
 - Flask
-- SQLite (or any other database you plan to use)
-- An Ollama account to download the language model
+- SQLite (or an alternative database engine)
+- Ollama for downloading and using the language model
 
-## Installation
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/your-repository/bigboss.git
-cd bigboss
-```
-### 2. Install Dependencies
-Make sure you have Python installed. Then, install the required Python packages:
+To install dependencies, run:
 
 ```bash
 pip install -r requirements.txt
 ```
+
+---
+
+## **Setup**
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/your-repository/bigboss.git
+cd bigboss
+```
+
+### 2. Configure Database
+By default, the tool uses SQLite. Ensure the database connection in `database.py` is configured according to your needs.
+
 ### 3. Download the Language Model
-Download the required language model from Ollama:
+Download the required model using Ollama:
 
 ```bash
 ollama download mixtral:8x22b
 ```
+--- 
 
-### 4. Configure the Database
-Set up your database. By default, SQLite is used. Ensure the get_db_connection function in database.py is correctly configured to connect to your database.
+## **GitHub Actions Integration**
 
-## Project Structure
+BigBOSS relies on a set of **GitHub Actions** to enable seamless monitoring and analysis of contributions and Codes of Conduct in OSS repositories. These actions automate workflows for analyzing comments, managing Code of Conduct files, and creating issues or pull requests as needed.
 
-- `app.py`: Entry point for the Flask application.
-- `config.py`: Contains configuration constants.
-- `controllers/conductanalyzer.py`: Contains the route handler for analyzing comments.
-- `models/conductanalyzer.py`: Defines the conductAnalyzer model and database interaction methods.
-- `services/conductanalyzer.py`: Handles comment analysis and response generation.
-- `routes.py`: Defines the Flask routes.
+### **Required Actions**
 
-## Running the Application
+To ensure full functionality, the following GitHub Actions must be configured in your repository:
+
+1. **`Comment Analyzer`**: Handles analysis of comments in issues, pull requests, and discussions, and triggers appropriate actions such as generating responses or notifying repository owners.
+
+2. **`Code of Conduct Analyzer`**: Processes and sends Code of Conduct files to the analysis server for evaluation.
+
+3. **`Code of Conduct Initializer`**: Adds or updates the `CODE_OF_CONDUCT.md` file in repositories where it is missing or outdated.
+
+4. **`Issue Manager`**: Creates issues for repositories with incomplete or missing Code of Conduct guidelines.
+
+
+### **Setup Instructions for Actions**
+
+Ensure the following steps are completed to integrate the actions:
+- Add the **required secrets** (e.g., `GITHUB_TOKEN`, `SERVER_URL`, `BOT_USER`, `BOT_TOKEN`) to your GitHub repository.
+- Include the appropriate workflow files (e.g., `.github/workflows/comment-analyzer.yml`) in your repository.
+- Configure the actions with the necessary inputs to match your project's requirements.
+
+---
+
+## **Running the Application**
+
 Start the Flask server:
 
 ```bash
 python app.py
 ```
 
-The server will be accessible at `http://0.0.0.0:5000`.
+The server will be accessible at: `http://0.0.0.0:5000`.
 
-## API Endpoint
+---
 
-### Analyze Comment
+## **Services and Endpoints**
 
-- **URL**: `/analyze`
-- **Method**: `POST`
-- **Content-Type**: `application/json`
-- **Payload**:
+### 1. **`conductAnalyzer`**
 
+Analyzes comments for ethical and professional behavior. Generates responses for flagged comments.
+
+**Endpoint**: `/analyze`  
+**Method**: `POST`  
+**Payload** (example):
 ```json
 {
     "comment_id": "12345",
@@ -88,99 +125,53 @@ The server will be accessible at `http://0.0.0.0:5000`.
     "response_at": null
 }
 ```
-- **Response**:
+
+### 2. **`cocAnalyzer`**
+
+Processes and evaluates Code of Conduct (CoC) files for compliance and ethical patterns.
+
+**Endpoint**: `/analyze`  
+**Method**: `POST`  
+**Payload** (example):
 ```json
 {
-    "comment_id": "12345",
-    "event_type": "issue_comment",
-    "user": "user123",
-    "user_id": "67890",
-    "user_avatar_url": "https://example.com/avatar.jpg",
-    "user_html_url": "https://github.com/user123",
-    "user_type": "User",
-    "comment_body": "Thank you for your help!",
-    "created_at": "2023-01-01T00:00:00Z",
-    "updated_at": "2023-01-01T00:00:00Z",
-    "analysis": {
-        "classification": "positive",
-        "reasons": "Demonstrates empathy and kindness.",
-        "flags": ["Empathy and Kindness"],
-        "numbered_flags": {"F1": "Empathy and Kindness"}
-    },
-    "event_number": "1",
-    "event_title": "Issue title",
-    "event_body": "Issue body",
-    "event_url": "https://github.com/repo/issues/1",
-    "comment_url": "https://github.com/repo/issues/1#issuecomment-1",
+    "type": "code_of_conduct",
     "repository_name": "repo",
-    "response_comment": "@user123 Thank you for your help!",
-    "response_at": "2023-01-01T00:00:00Z"
+    "repository_url": "https://github.com/repo",
+    "code_of_conduct": "This is the text of the CoC file."
 }
 ```
-## Using the Service
 
-To use the conductAnalyzer service in your GitHub repository, follow these steps to configure the workflow and connect it to your server.
+---
 
-### 1. Setup Secrets in GitHub
+## **Project Structure**
 
-Ensure you have added the following secrets to your GitHub repository:
+- **`app.py`**: Entry point for the Flask application.
+- **`config.py`**: Contains constants and configurations for both services.
+- **`controllers/`**:
+  - **`controller.py`**: Defines the route handler for comment and CoC analysis.
+- **`models/`**:
+  - **`conductanalyzer.py`**: Defines data handling and database interactions for comment analysis.
+  - **`cocanalyzer.py`**: Defines data handling and database interactions for CoC analysis.
+- **`services/`**:
+  - **`conductanalyzer.py`**: Implements comment analysis using a language model.
+  - **`cocanalyzer.py`**: Implements CoC evaluation and flag detection.
 
-- `GITHUB_TOKEN`: GitHub token for authentication.
-- `SERVER_URL`: URL of your conductAnalyzer server.
-- `SENDINBLUE_API_KEY`: Sendinblue API key for sending email notifications.
-- `EMAIL_FROM`: Sender email address for notifications.
-- `EMAIL_TO`: Recipient email address for notifications.
-- `BOT_USER`: GitHub username of the bot.
-- `BOT_TOKEN`: GitHub token of the bot for performing comment actions.
+---
 
-### 2. Configure GitHub Actions Workflow
 
-Create or update the GitHub Actions workflow file in your repository (e.g., `.github/workflows/check-comments.yml`) with the following configuration:
+## **Contributing**
 
-```yaml
-name: Check Comments
+We welcome contributions! Please refer to the [CONTRIBUTING.md](CONTRIBUTING.md) file for details on our development guidelines.
 
-on:
-  issue_comment:
-    types: [created]
-  pull_request_review_comment:
-    types: [created]
-  discussion_comment:
-    types: [created]
+---
 
-jobs:
-  check-comment:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Analyze Comments
-        uses: SOM-Research/comment-analyzer@v1.1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          server_url: ${{ secrets.SERVER_URL }}
-          sendinblue_api_key: ${{ secrets.SENDINBLUE_API_KEY }}
-          email_from: ${{ secrets.EMAIL_FROM }}
-          email_to: ${{ secrets.EMAIL_TO }}
-          bot_user: ${{ secrets.BOT_USER }}
-          bot_token: ${{ secrets.BOT_TOKEN }}
-```
-# Contributing
+## **Code of Conduct**
 
-This project is part of a research line of the [SOM Research Lab](https://som-research.uoc.edu/), but we are open to contributions from the community. Any comment is more than welcome!
+This project adheres to a Code of Conduct. By participating, you agree to uphold our [Code of Conduct](CODE_OF_CONDUCT.md).
 
-If you are interested in contributing to this project, please read the [CONTRIBUTING.md](CONTRIBUTING.md) file.
+---
 
-# Code of Conduct
+## **License**
 
-At SOM Research Lab we are dedicated to creating and maintaining welcoming, inclusive, safe, and harassment-free development spaces. Anyone participating will be subject to and agrees to sign on to our [Code of Conduct](CODE_OF_CONDUCT.md).
-
-# Governance
-
-The development and community management of this project follows the governance rules described in the [GOVERNANCE.md](GOVERNANCE.md) document.
-
-# License
-
-This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
-
-The [CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/) license allows users to distribute, remix, adapt, and build upon the material in any medium or format, so long as attribution is given to the creator. The license allows for commercial use. If you remix, adapt, or build upon the material, you must license the modified material under identical terms.
-
-<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
+This work is licensed under the [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/).
